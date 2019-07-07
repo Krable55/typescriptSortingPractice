@@ -7,61 +7,62 @@ interface Sortable {
 interface Mappable {
   currentLevel(): string | number;
   endOfPath(): boolean;
-
 }
-export class Sorter {
-  constructor(public collection: Sortable) {}
+export abstract class Sorter {
+  abstract compare(leftIndex: number, rightIndex: number): boolean;
+  abstract swap(leftIndex: number, rightIndex: number): void;
+  abstract length: number;
   sort(): void {
-    const { length } = this.collection;
+    const { length } = this;
     for (let i = 0; i < length; i++) {
       for (let j = 0; j < length - i - 1; j++) {
-        if (this.collection.compare(j, j + 1)) {
-          this.collection.swap(j, j + 1);
+        if (this.compare(j, j + 1)) {
+          this.swap(j, j + 1);
         }
       }
     }
   }
 }
 
-export class RecurseStateToLocation {
-  constructor(public Path: Mappable) {}
-  recurseState(obj: any, path: Mappable): any {
-    const { endOfPath, currentLevel } = path;
-    console.log(currentLevel, obj);
-    if (endOfPath) {
-      return obj;
-    }
-    // console.log("path", path);
-    // console.log("OBJ", currentLevel, obj);
-    if (this.isObject(obj)) {
-      return { [currentLevel]: this.recurseState(obj[currentLevel], path) };
-    }
-    if (this.isArray(obj)) {
-      obj[currentLevel] = this.recurseState(obj[currentLevel], path);
-      return [...obj];
-    }
-  }
-  isObject(obj: any): boolean {
-    return !(obj instanceof Array) && obj !== null;
-  }
-  isArray(obj: any): boolean {
-    return obj instanceof Array;
-  }
-  mapArray(arr: (string | number)[], callBack(): void ) any {
-   return [...obj].map((item, id) => {
-    				if(item && item !== undefined && item[key] && item[key] !== undefined){
-    					let newObj =  {
-    						...item,
-    						[changeThisProperty]: callBack ? callBack(value) : value
-    					}
-    					console.log('found: ', item)
-    					console.log('newObj: ', newObj)
-    					return newObj
-    				}
-    				return item
-    		})
-  }
-}
+// export class RecurseStateToLocation {
+//   constructor(public Path: Mappable) {}
+//   recurseState(obj: any, path: Mappable): any {
+//     const { endOfPath, currentLevel } = path;
+//     console.log(currentLevel, obj);
+//     if (endOfPath) {
+//       return obj;
+//     }
+//     // console.log("path", path);
+//     // console.log("OBJ", currentLevel, obj);
+//     if (this.isObject(obj)) {
+//       return { [currentLevel]: this.recurseState(obj[currentLevel], path) };
+//     }
+//     if (this.isArray(obj)) {
+//       obj[currentLevel] = this.recurseState(obj[currentLevel], path);
+//       return [...obj];
+//     }
+//   }
+//   isObject(obj: any): boolean {
+//     return !(obj instanceof Array) && obj !== null;
+//   }
+//   isArray(obj: any): boolean {
+//     return obj instanceof Array;
+//   }
+//   mapArray(arr: (string | number)[], callBack(): void ) any {
+//    return [...obj].map((item, id) => {
+//     				if(item && item !== undefined && item[key] && item[key] !== undefined){
+//     					let newObj =  {
+//     						...item,
+//     						[changeThisProperty]: callBack ? callBack(value) : value
+//     					}
+//     					console.log('found: ', item)
+//     					console.log('newObj: ', newObj)
+//     					return newObj
+//     				}
+//     				return item
+//     		})
+//   }
+// }
 
 // let string = `test.split[1].here.there[2]`;
 // let test: any = {

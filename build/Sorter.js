@@ -1,26 +1,14 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Sorter = /** @class */ (function () {
-    function Sorter(collection) {
-        this.collection = collection;
+    function Sorter() {
     }
     Sorter.prototype.sort = function () {
-        var length = this.collection.length;
+        var length = this.length;
         for (var i = 0; i < length; i++) {
             for (var j = 0; j < length - i - 1; j++) {
-                if (this.collection.compare(j, j + 1)) {
-                    this.collection.swap(j, j + 1);
+                if (this.compare(j, j + 1)) {
+                    this.swap(j, j + 1);
                 }
             }
         }
@@ -28,50 +16,45 @@ var Sorter = /** @class */ (function () {
     return Sorter;
 }());
 exports.Sorter = Sorter;
-var RecurseStateToLocation = /** @class */ (function () {
-    function RecurseStateToLocation(Path) {
-        this.Path = Path;
-    }
-    RecurseStateToLocation.prototype.recurseState = function (obj, path) {
-        var _a;
-        var endOfPath = path.endOfPath, currentLevel = path.currentLevel;
-        console.log(currentLevel, obj);
-        if (endOfPath) {
-            return obj;
-        }
-        // console.log("path", path);
-        // console.log("OBJ", currentLevel, obj);
-        if (this.isObject(obj)) {
-            return _a = {}, _a[currentLevel] = this.recurseState(obj[currentLevel], path), _a;
-        }
-        if (this.isArray(obj)) {
-            obj[currentLevel] = this.recurseState(obj[currentLevel], path);
-            return obj.slice();
-        }
-    };
-    RecurseStateToLocation.prototype.isObject = function (obj) {
-        return !(obj instanceof Array) && obj !== null;
-    };
-    RecurseStateToLocation.prototype.isArray = function (obj) {
-        return obj instanceof Array;
-    };
-    return RecurseStateToLocation;
-}());
-exports.RecurseStateToLocation = RecurseStateToLocation;
-(function () { return ; });
-any;
-{
-    return obj.slice().map(function (item, id) {
-        var _a;
-        if (item && item !== undefined && item[key] && item[key] !== undefined) {
-            var newObj = __assign({}, item, (_a = {}, _a[changeThisProperty] = callBack ? callBack(value) : value, _a));
-            console.log('found: ', item);
-            console.log('newObj: ', newObj);
-            return newObj;
-        }
-        return item;
-    });
-}
+// export class RecurseStateToLocation {
+//   constructor(public Path: Mappable) {}
+//   recurseState(obj: any, path: Mappable): any {
+//     const { endOfPath, currentLevel } = path;
+//     console.log(currentLevel, obj);
+//     if (endOfPath) {
+//       return obj;
+//     }
+//     // console.log("path", path);
+//     // console.log("OBJ", currentLevel, obj);
+//     if (this.isObject(obj)) {
+//       return { [currentLevel]: this.recurseState(obj[currentLevel], path) };
+//     }
+//     if (this.isArray(obj)) {
+//       obj[currentLevel] = this.recurseState(obj[currentLevel], path);
+//       return [...obj];
+//     }
+//   }
+//   isObject(obj: any): boolean {
+//     return !(obj instanceof Array) && obj !== null;
+//   }
+//   isArray(obj: any): boolean {
+//     return obj instanceof Array;
+//   }
+//   mapArray(arr: (string | number)[], callBack(): void ) any {
+//    return [...obj].map((item, id) => {
+//     				if(item && item !== undefined && item[key] && item[key] !== undefined){
+//     					let newObj =  {
+//     						...item,
+//     						[changeThisProperty]: callBack ? callBack(value) : value
+//     					}
+//     					console.log('found: ', item)
+//     					console.log('newObj: ', newObj)
+//     					return newObj
+//     				}
+//     				return item
+//     		})
+//   }
+// }
 // let string = `test.split[1].here.there[2]`;
 // let test: any = {
 //   split: [null, { here: { there: [null, null, { test: "test" }] } }]
